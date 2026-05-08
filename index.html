@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="sah">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>꒤꒒꒤꒤ ꊰ꒐꓄ꈤꏂꇙ</title>
+    <style>
+        :root {
+            --bg: #FFF8F0; --card: #FFFFFF; --primary: #5C3D2E; --gold: #FFD700;
+            --success: #228B22; --danger: #B22222; --text: #3E2723; --text2: #8B7355; --border: #DEB887;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 80px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #3E2723, #5C3D2E); color: white;
+            padding: 16px; text-align: center; position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        .header h1 { font-size: 20px; color: var(--gold); letter-spacing: 3px; font-weight: 900; }
+        .header p { font-size: 10px; color: #DEB887; margin-top: 2px; font-style: italic; }
+
+        .container { padding: 12px; max-width: 500px; margin: 0 auto; }
+
+        .card {
+            background: var(--card); border-radius: 16px; padding: 16px; margin-bottom: 12px;
+            border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(139,69,19,0.1);
+        }
+
+        .card-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .card-subtitle { font-size: 11px; color: var(--text2); margin-bottom: 12px; font-style: italic; }
+
+        input, select {
+            width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 10px;
+            font-size: 14px; background: #FFFBF5; margin-bottom: 8px; outline: none;
+        }
+
+        input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.15); }
+
+        .btn {
+            width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px;
+            font-weight: 700; cursor: pointer; transition: transform 0.15s; color: white;
+        }
+
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--primary); color: var(--gold); }
+        .btn-success { background: var(--success); }
+        .btn-danger { background: white; color: var(--danger); border: 2px solid var(--danger); }
+        .btn-gold { background: var(--gold); color: var(--primary); }
+
+        .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .stat-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+        .stat-box {
+            background: #FFF8F0; border-radius: 12px; padding: 12px;
+            text-align: center; border: 1px solid var(--gold);
+        }
+
+        .stat-value { font-size: 24px; font-weight: 900; color: var(--primary); }
+        .stat-label { font-size: 9px; color: var(--text2); margin-top: 2px; text-transform: uppercase; }
+
+        .list-item {
+            display: flex; align-items: center; padding: 10px 12px; background: #FFF8F0;
+            border-radius: 10px; margin-bottom: 6px; gap: 10px; border: 1px solid var(--border);
+        }
+
+        .list-icon {
+            width: 42px; height: 42px; border-radius: 10px; background: #FFD70020;
+            display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+        }
+
+        .list-info { flex: 1; }
+        .list-title { font-weight: 700; font-size: 13px; }
+        .list-sub { font-size: 10px; color: var(--text2); }
+        .list-value { font-weight: 800; font-size: 13px; color: var(--primary); }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; background: white;
+            display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; border-top: 3px solid var(--gold);
+            padding: 6px 4px; z-index: 100;
+        }
+
+        .nav-item {
+            text-align: center; padding: 8px 4px; cursor: pointer; border-radius: 10px;
+            font-size: 10px; color: var(--text2); border: none; background: none;
+        }
+
+        .nav-item.active { background: #FFD70020; color: var(--primary); font-weight: 700; }
+        .nav-icon { font-size: 20px; display: block; margin-bottom: 2px; }
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .banner {
+            background: linear-gradient(135deg, #8B4513, #5C3D2E); border-radius: 16px;
+            padding: 20px; color: white; margin-bottom: 12px; border: 2px solid var(--gold);
+        }
+
+        .banner-title { font-size: 11px; color: var(--gold); letter-spacing: 2px; }
+        .banner-text { font-size: 20px; font-weight: 900; margin: 4px 0; }
+
+        .exercise-card {
+            background: #FFF8F0; border-radius: 12px; padding: 14px; margin-bottom: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .exercise-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .exercise-name { font-size: 15px; font-weight: 700; }
+        .exercise-muscle { font-size: 10px; color: var(--text2); }
+
+        .set-row {
+            display: flex; align-items: center; gap: 6px; padding: 6px;
+            background: white; border-radius: 8px; margin-bottom: 3px; border: 1px solid var(--border);
+        }
+
+        .set-number {
+            background: var(--primary); color: var(--gold); padding: 4px 8px;
+            border-radius: 6px; font-size: 10px; font-weight: 700; min-width: 28px; text-align: center;
+        }
+
+        .set-input { width: 50px !important; padding: 4px !important; font-size: 11px !important; margin: 0 !important; text-align: center; }
+        .set-label { font-size: 10px; color: var(--text2); }
+        .add-set-btn { background: #FFD70030; color: var(--primary); border: 1px solid var(--gold); border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+        .timer-display { font-size: 28px; font-weight: 900; text-align: center; color: var(--primary); }
+        .timer-label { font-size: 11px; text-align: center; color: var(--text2); }
+        .streak-badge { display: inline-flex; align-items: center; gap: 4px; background: #FFD70020; border: 1px solid var(--gold); border-radius: 20px; padding: 8px 16px; font-weight: 700; font-size: 13px; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>꒤꒒꒤꒤ ꊰ꒐꓄ꈤꏂꇙ</h1>
+    <p>ТВОЙ ПУТЬ. ТВОЯ СИЛА. ТВОЙ УЛУУ.</p>
+</div>
+
+<div class="container">
+
+    <!-- ТРЕНИРОВКИ -->
+    <div id="workoutPage" class="page active">
+        <div class="card">
+            <div class="card-title">+ Саҥа эрчиллии</div>
+            <div class="card-subtitle">Күүстээх буол!</div>
+            <input type="text" id="workoutName" placeholder="Аат (Название)">
+            <input type="text" id="workoutDesc" placeholder="Быһаарыы (Описание)">
+            <button class="btn btn-primary" onclick="createWorkout()">Тэрий (Создать)</button>
+        </div>
+        <div id="workoutList"></div>
+    </div>
+
+    <!-- АКТИВНАЯ ТРЕНИРОВКА -->
+    <div id="activePage" class="page">
+        <div class="banner">
+            <div class="banner-title">АКТИВНАЯ</div>
+            <div class="banner-text" id="activeName"></div>
+            <div>⏱ <span id="workoutTimer">00:00:00</span></div>
+        </div>
+
+        <div class="card" id="restCard" style="display:none; background:#FFFACD;">
+            <div class="timer-label">Сынньалаҥ</div>
+            <div class="timer-display" id="restTimer">00:60</div>
+            <button class="btn btn-gold" onclick="skipRest()">КӨТҮТ</button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Эрчиллиини эптээ</div>
+            <select id="exerciseSelect">
+                <option>Жим лежа (Грудь)</option><option>Приседания (Ноги)</option>
+                <option>Становая тяга (Спина)</option><option>Подтягивания (Спина)</option>
+                <option>Отжимания (Грудь)</option><option>Бег (Кардио)</option>
+                <option>Планка (Пресс)</option><option>Жим гантелей (Плечи)</option>
+                <option>Сгибания на бицепс (Руки)</option><option>Скручивания (Пресс)</option>
+            </select>
+            <button class="btn btn-primary" onclick="addExercise()">+ Эптээ</button>
+        </div>
+        <div id="exerciseList"></div>
+        <button class="btn btn-success" onclick="completeWorkout()" style="margin-top:8px;">✅ ТҮМҮКТЭЭ</button>
+        <button class="btn btn-danger" onclick="cancelWorkout()" style="margin-top:4px;">❌ Төннүн</button>
+    </div>
+
+    <!-- ПИТАНИЕ -->
+    <div id="mealPage" class="page">
+        <div class="card">
+            <div class="card-title">+ Аһылыгы эптээ</div>
+            <input type="text" id="mealName" placeholder="Ас аата">
+            <select id="mealType">
+                <option>🌅 Сарсыардааҥы</option><option>☀️ Күнүскү</option>
+                <option>🌙 Киэһээҥи</option><option>🍎 Тыҥырах</option>
+            </select>
+            <div class="stat-row stat-row-4">
+                <input type="number" id="mealCal" placeholder="Ккал" style="margin:0;">
+                <input type="number" id="mealProt" placeholder="Белок" style="margin:0;">
+                <input type="number" id="mealCarb" placeholder="Углев" style="margin:0;">
+                <input type="number" id="mealFat" placeholder="Сыа" style="margin:0;">
+            </div>
+            <button class="btn btn-primary" onclick="addMeal()">Эптээ</button>
+        </div>
+        <div class="card">
+            <div class="card-title">📊 Бүгүн</div>
+            <div class="stat-row stat-row-4">
+                <div class="stat-box"><div class="stat-value" id="todayCal" style="color:#8B4513;">0</div><div class="stat-label">Ккал</div></div>
+                <div class="stat-box"><div class="stat-value" id="todayProt" style="color:#228B22;">0</div><div class="stat-label">Белок</div></div>
+                <div class="stat-box"><div class="stat-value" id="todayCarb" style="color:#FFA500;">0</div><div class="stat-label">Углев</div></div>
+                <div class="stat-box"><div class="stat-value" id="todayFat" style="color:#B22222;">0</div><div class="stat-label">Сыа</div></div>
+            </div>
+        </div>
+        <div id="mealList"></div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div id="statsPage" class="page">
+        <div class="card" style="text-align:center;">
+            <span class="streak-badge">🔥 <span id="streakDays">0</span> күн</span>
+            <p style="font-size:11px;color:#8B7355;margin-top:6px;">Салҕаа!</p>
+        </div>
+        <div class="card">
+            <div class="card-title">📊 Статистика</div>
+            <div class="stat-row">
+                <div class="stat-box"><div class="stat-value" style="color:#8B4513;" id="totalWork">0</div><div class="stat-label">Эрчиллии</div></div>
+                <div class="stat-box"><div class="stat-value" style="color:#228B22;" id="totalTime">0ч 0м</div><div class="stat-label">Кэм</div></div>
+                <div class="stat-box"><div class="stat-value" style="color:#FFA500;" id="totalCalBurned">0</div><div class="stat-label">Калория</div></div>
+                <div class="stat-box"><div class="stat-value" style="color:#B22222;" id="totalSets">0</div><div class="stat-label">Подход</div></div>
+            </div>
+        </div>
+        <div id="recentDiv"></div>
+    </div>
+
+    <!-- ПРОФИЛЬ -->
+    <div id="profilePage" class="page">
+        <div class="card" style="text-align:center;">
+            <div style="width:80px;height:80px;background:#8B4513;border-radius:40px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:36px;border:3px solid #FFD700;">👤</div>
+            <div class="card-title" style="justify-content:center;">Мин профилым</div>
+        </div>
+        <div class="card">
+            <input type="text" id="profName" placeholder="Аат">
+            <input type="number" id="profAge" placeholder="Саас">
+            <input type="number" id="profWeight" placeholder="Ыйааһын кг" oninput="calcBMI()">
+            <input type="number" id="profHeight" placeholder="Үрдүк см" oninput="calcBMI()">
+            <div class="stat-row">
+                <div class="stat-box"><div class="stat-value" style="color:#8B4513;" id="bmiVal">0</div><div class="stat-label">ИМТ</div></div>
+                <div class="stat-box"><div class="stat-value" style="color:#228B22;" id="dailyCal">2000</div><div class="stat-label">Ккал/күн</div></div>
+            </div>
+            <button class="btn btn-primary" onclick="saveProfile()">Харыстаа</button>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-nav">
+    <button class="nav-item active" onclick="showPage('workout')"><span class="nav-icon">🏋️</span>Эрчиллии</button>
+    <button class="nav-item" onclick="showPage('meal')"><span class="nav-icon">🍽</span>Аһылык</button>
+    <button class="nav-item" onclick="showPage('stats')"><span class="nav-icon">📊</span>Стат</button>
+    <button class="nav-item" onclick="showPage('profile')"><span class="nav-icon">👤</span>Профиль</button>
+</div>
+
+<script>
+let W = JSON.parse(localStorage.getItem('fw_w') || '[]');
+let M = JSON.parse(localStorage.getItem('fw_m') || '[]');
+let P = JSON.parse(localStorage.getItem('fw_p') || '{"name":"","age":0,"weight":0,"height":0}');
+let AW = null, tmr = null, rtmr = null;
+
+function save() { localStorage.setItem('fw_w', JSON.stringify(W)); localStorage.setItem('fw_m', JSON.stringify(M)); localStorage.setItem('fw_p', JSON.stringify(P)); }
+
+function showPage(p) {
+    document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
+    let ids = {workout:'workoutPage',active:'activePage',meal:'mealPage',stats:'statsPage',profile:'profilePage'};
+    document.getElementById(ids[p]).classList.add('active');
+    event?.target?.closest('.nav-item')?.classList.add('active') || document.querySelector(`[onclick*="${p}"]`)?.classList.add('active');
+    if (p === 'stats') renderStats();
+    if (p === 'meal') renderMeals();
+    if (p === 'profile') loadProf();
+}
+
+function createWorkout() {
+    let n = document.getElementById('workoutName').value.trim();
+    if (!n) return;
+    W.push({id:Date.now(),name:n,desc:document.getElementById('workoutDesc').value,date:new Date().toISOString(),status:'planned',duration:0,calories:0,exercises:[]});
+    document.getElementById('workoutName').value = '';
+    document.getElementById('workoutDesc').value = '';
+    save(); renderWorkouts();
+}
+
+function startWorkout(i) {
+    AW = {...W[i], idx:i, start:Date.now()};
+    document.getElementById('activeName').textContent = AW.name;
+    AW.exercises = AW.exercises || [];
+    showPage('active'); renderExercises();
+    if (tmr) clearInterval(tmr);
+    tmr = setInterval(() => {
+        if (!AW) return;
+        let e = Math.floor((Date.now() - AW.start) / 1000);
+        document.getElementById('workoutTimer').textContent = `${String(Math.floor(e/3600)).padStart(2,'0')}:${String(Math.floor((e%3600)/60)).padStart(2,'0')}:${String(e%60).padStart(2,'0')}`;
+    }, 1000);
+}
+
+function addExercise() {
+    if (!AW) return;
+    let s = document.getElementById('exerciseSelect').value;
+    let n = s.split(' (')[0], m = s.split('(')[1]?.replace(')','') || '';
+    AW.exercises.push({name:n,muscle:m,sets:[]});
+    renderExercises();
+}
+
+function addSet(ei) {
+    if (!AW) return;
+    let ex = AW.exercises[ei], last = ex.sets[ex.sets.length - 1];
+    ex.sets.push({num:ex.sets.length+1,weight:last?.weight||0,reps:last?.reps||0,done:false});
+    renderExercises();
+    let sec = 60;
+    document.getElementById('restCard').style.display = 'block';
+    if (rtmr) clearInterval(rtmr);
+    rtmr = setInterval(() => {
+        sec--;
+        document.getElementById('restTimer').textContent = `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
+        if (sec <= 0) { clearInterval(rtmr); document.getElementById('restCard').style.display = 'none'; }
+    }, 1000);
+}
+
+function updateSet(ei, si, field, val) {
+    if (!AW) return;
+    if (field === 'done') AW.exercises[ei].sets[si].done = !AW.exercises[ei].sets[si].done;
+    else AW.exercises[ei].sets[si][field] = parseFloat(val) || 0;
+}
+
+function skipRest() { if (rtmr) clearInterval(rtmr); document.getElementById('restCard').style.display = 'none'; }
+
+function completeWorkout() {
+    if (!AW) return;
+    let e = Math.floor((Date.now() - AW.start) / 1000);
+    W[AW.idx] = {...W[AW.idx], status:'completed', duration:e, calories:Math.round(e/60*7), exercises:AW.exercises};
+    if (tmr) clearInterval(tmr); if (rtmr) clearInterval(rtmr); AW = null;
+    save(); renderWorkouts(); showPage('workout');
+}
+
+function cancelWorkout() { if (tmr) clearInterval(tmr); if (rtmr) clearInterval(rtmr); AW = null; showPage('workout'); }
+function deleteWorkout(i) { W.splice(i, 1); save(); renderWorkouts(); }
+
+function renderExercises() {
+    let el = document.getElementById('exerciseList');
+    if (!AW?.exercises.length) { el.innerHTML = '<p style="text-align:center;color:#8B7355;padding:20px;">Эрчиллии суох</p>'; return; }
+    el.innerHTML = AW.exercises.map((ex,i) => `
+        <div class="exercise-card">
+            <div class="exercise-header">
+                <div><div class="exercise-name">${ex.name}</div><div class="exercise-muscle">${ex.muscle}</div></div>
+                <button class="add-set-btn" onclick="addSet(${i})">+ Подход</button>
+            </div>
+            ${ex.sets.map((s,j) => `
+                <div class="set-row">
+                    <span class="set-number">${s.num}</span>
+                    <span class="set-label">Ый</span>
+                    <input class="set-input" type="number" value="${s.weight}" onchange="updateSet(${i},${j},'weight',this.value)">
+                    <span class="set-label">Хат</span>
+                    <input class="set-input" type="number" value="${s.reps}" onchange="updateSet(${i},${j},'reps',this.value)">
+                    <input type="checkbox" ${s.done?'checked':''} onchange="updateSet(${i},${j},'done')">
+                </div>
+            `).join('')}
+        </div>
+    `).join('');
+}
+
+function renderWorkouts() {
+    let el = document.getElementById('workoutList');
+    if (!W.length) { el.innerHTML = '<div class="card" style="text-align:center;color:#8B7355;">Эрчиллии суох</div>'; return; }
+    el.innerHTML = W.map((w,i) => `
+        <div class="card">
+            <div class="list-item" style="border:none;padding:0;background:none;margin-bottom:8px;">
+                <div class="list-icon">🏋️</div>
+                <div class="list-info">
+                    <div class="list-title">${w.name}</div>
+                    <div class="list-sub">${new Date(w.date).toLocaleDateString('ru')} | ${w.status==='completed'?'✅ Түмүктэммит':'📋 План'}</div>
+                </div>
+                <div class="list-value">${w.calories||0} ккал</div>
+            </div>
+            ${w.status!=='completed'?`<button class="btn btn-success" style="padding:8px;font-size:12px;" onclick="startWorkout(${i})">▶ Саҕалыырга</button>`:''}
+            <button class="btn btn-danger" style="padding:8px;font-size:12px;margin-top:4px;" onclick="deleteWorkout(${i})">🗑 Сот</button>
+        </div>
+    `).join('');
+}
+
+function addMeal() {
+    let n = document.getElementById('mealName').value.trim();
+    if (!n) return;
+    M.push({name:n,type:document.getElementById('mealType').value,calories:+document.getElementById('mealCal').value||0,protein:+document.getElementById('mealProt').value||0,carbs:+document.getElementById('mealCarb').value||0,fats:+document.getElementById('mealFat').value||0,date:new Date().toISOString()});
+    ['mealName','mealCal','mealProt','mealCarb','mealFat'].forEach(id => document.getElementById(id).value = '');
+    save(); renderMeals();
+}
+
+function deleteMeal(i) { M.splice(i, 1); save(); renderMeals(); }
+
+function renderMeals() {
+    let today = new Date().toDateString(), tm = M.filter(m => new Date(m.date).toDateString() === today);
+    document.getElementById('todayCal').textContent = tm.reduce((s,m) => s + m.calories, 0);
+    document.getElementById('todayProt').textContent = tm.reduce((s,m) => s + m.protein, 0);
+    document.getElementById('todayCarb').textContent = tm.reduce((s,m) => s + m.carbs, 0);
+    document.getElementById('todayFat').textContent = tm.reduce((s,m) => s + m.fats, 0);
+    let el = document.getElementById('mealList');
+    el.innerHTML = M.length ? M.map((m,i) => `
+        <div class="card"><div class="list-item" style="border:none;padding:0;background:none">
+            <div class="list-icon">🍽</div>
+            <div class="list-info"><div class="list-title">${m.name}</div><div class="list-sub">${m.type} | ${new Date(m.date).toLocaleDateString('ru')}</div></div>
+            <div class="list-value">${m.calories} ккал</div>
+        </div>
+        <button class="btn btn-danger" style="padding:6px;font-size:11px;margin-top:4px;" onclick="deleteMeal(${i})">🗑 Сот</button></div>
+    `).join('') : '<div class="card" style="text-align:center;color:#8B7355;">Аһылык суох</div>';
+}
+
+function renderStats() {
+    let c = W.filter(w => w.status === 'completed'), ts = c.reduce((s,w) => s + (w.duration||0), 0);
+    document.getElementById('totalWork').textContent = c.length;
+    document.getElementById('totalTime').textContent = `${Math.floor(ts/3600)}ч ${Math.floor((ts%3600)/60)}м`;
+    document.getElementById('totalCalBurned').textContent = c.reduce((s,w) => s + (w.calories||0), 0);
+    document.getElementById('totalSets').textContent = c.reduce((s,w) => s + w.exercises.reduce((es,e) => es + (e.sets?.length||0), 0), 0);
+    let dates = [...new Set(c.map(w => new Date(w.date).toDateString()))].sort().reverse(), streak = 0;
+    for (let d of dates) { if (d === new Date(Date.now() - streak*86400000).toDateString()) streak++; else break; }
+    document.getElementById('streakDays').textContent = streak;
+    let rc = c.slice(-5).reverse();
+    document.getElementById('recentDiv').innerHTML = rc.length ? `<div class="card"><div class="card-title">📋 Бүтэһик</div>${rc.map(w => `
+        <div class="list-item"><div class="list-icon">💪</div><div class="list-info"><div class="list-title">${w.name}</div><div class="list-sub">${new Date(w.date).toLocaleDateString('ru')}</div></div><div class="list-value">${w.calories||0} ккал</div></div>
+    `).join('')}</div>` : '';
+}
+
+function calcBMI() {
+    let w = +document.getElementById('profWeight').value || 0, h = +document.getElementById('profHeight').value || 0;
+    document.getElementById('bmiVal').textContent = h > 0 ? (w / Math.pow(h/100, 2)).toFixed(1) : 0;
+    document.getElementById('dailyCal').textContent = Math.round(w * 22);
+}
+
+function loadProf() {
+    document.getElementById('profName').value = P.name || '';
+    document.getElementById('profAge').value = P.age || '';
+    document.getElementById('profWeight').value = P.weight || '';
+    document.getElementById('profHeight').value = P.height || '';
+    calcBMI();
+}
+
+function saveProfile() {
+    P.name = document.getElementById('profName').value;
+    P.age = +document.getElementById('profAge').value || 0;
+    P.weight = +document.getElementById('profWeight').value || 0;
+    P.height = +document.getElementById('profHeight').value || 0;
+    save(); calcBMI();
+}
+
+renderWorkouts(); loadProf();
+</script>
+</body>
+</html>
